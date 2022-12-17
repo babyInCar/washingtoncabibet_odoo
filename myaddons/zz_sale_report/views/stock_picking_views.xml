@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="zz_view_picking_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_ids_without_package']" position="after">
+                <field name="payment_state" invisible="1"/>
+                <field name="total_pieces" invisible="1"/>
+                <field name="total_cabinets" invisible="1"/>
+                <field name="is_sale_show" invisible="1"/>
+            </xpath>
+            <xpath  expr="//notebook" position="before">
+                <div attrs="{'invisible': [('is_sale_show', '=', True)]}" >
+                    <field name="assembly"/>
+                    <span>Assembly</span>
+                    <t t-foreach="range(10)" t-as="item">
+                        <span style="width:30px;">&amp;nbsp;</span>
+                    </t>
+                    <field name="delivery"/>
+                    <span>Delivery</span>
+                    <t t-foreach="range(10)" t-as="item">
+                        <span style="width:30px;">&amp;nbsp;</span>
+                    </t>
+                    <field name="pick_up"/>
+                    <span>Pick up</span>
+                    <t t-foreach="range(10)" t-as="item">
+                        <span style="width:30px;">&amp;nbsp;</span>
+                    </t>
+                    <field name="install"/>
+                    <span>Install</span>
+                </div>
+                <div attrs="{'invisible': [('is_sale_show', '=', True)]}"  style="font-weight:bold;">
+                    <field name="assembly_pro"/>
+                    <span>Assembly</span>
+                    <t t-foreach="range(10)" t-as="item">
+                        <span style="width:30px;">&amp;nbsp;</span>
+                    </t>
+                    <field name="delivery_pro"/>
+                    <span>Delivery</span>
+                    <t t-foreach="range(10)" t-as="item">
+                        <span style="width:30px;">&amp;nbsp;</span>
+                    </t>
+                    <field name="pick_up_pro"/>
+                    <span>Pick up</span>
+                    <t t-foreach="range(10)" t-as="item">
+                        <span style="width:30px;">&amp;nbsp;</span>
+                    </t>
+                    <field name="install_pro"/>
+                    <span>Install</span>
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

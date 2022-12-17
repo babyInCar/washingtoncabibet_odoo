@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="zz_report_picking_inherit" inherit_id="stock.report_picking">
+        <xpath expr="//div[@class='row']" position="after">
+            <div style="float:right;">
+                <span>Assembly:</span>
+                <t t-if="o.assembly">
+                    <span>Y</span>
+                </t>
+                <t t-else="">
+                    <span>N</span>
+                </t>
+                <t t-foreach="range(10)" t-as="item">
+                    <span style="width:30px;">&amp;nbsp;</span>
+                </t>
+                <span>Delivery:</span>
+                <t t-if="o.delivery">
+                    <span>Y</span>
+                </t>
+                <t t-else="">
+                    <span>N</span>
+                </t>
+                <t t-foreach="range(10)" t-as="item">
+                    <span style="width:30px;">&amp;nbsp;</span>
+                </t>
+                <span>Pick up:</span>
+                <t t-if="o.pick_up">
+                    <span>Y</span>
+                </t>
+                <t t-else="">
+                    <span>N</span>
+                </t>
+                <t t-foreach="range(10)" t-as="item">
+                    <span style="width:30px;">&amp;nbsp;</span>
+                </t>
+                <span>Install:</span>
+                <t t-if="o.pick_up">
+                    <span>Y</span>
+                </t>
+                <t t-else="">
+                    <span>N</span>
+                </t>
+            </div>
+        </xpath>
+        <xpath expr="//p[@t-field='o.note']" position="replace"/>
+
+        <xpath expr="//div[@class='row justify-content-end mb16']" position="after">
+            <div style="float:left;">
+                <h2 t-field="o.note"/>
+            </div>
+            <br/>
+            <div style="float:left;">
+                <h2 t-field="o.payment_state"/>
+            </div>
+        </xpath>
+        <xpath expr="//t[@t-set='no_reserved_product']" position="before">
+            <div style="float:right;">
+                <div>
+                    <span style="font-size:24px">
+                        <strong>Total Pieces:</strong>
+                        <strong t-field="o.total_pieces"/>
+                    </span>
+                </div>
+                <div>
+                    <span style="font-size:24px">
+                        <strong>Total Cabinets:</strong>
+                        <strong t-field="o.total_cabinets"/>
+                    </span>
+                </div>
+
+            </div>
+        </xpath>
+
+
+    </template>
+
+</odoo>

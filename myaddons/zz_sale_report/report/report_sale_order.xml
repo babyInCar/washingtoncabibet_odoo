@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="zz_report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@t-if='doc.client_order_ref']/strong" position="replace">
+            <strong>Customer PO#:</strong>
+        </xpath>
+        <xpath expr="//p[@id='fiscal_position_remark']" position="after">
+            <div style="float:right;">
+                <div>
+                    <span>I have read,understand and agreed to all terms and conditions in this
+                        <br/>
+                        form.
+                    </span>
+                </div>
+                <div>
+                    <span>Signature</span>
+                    <t t-foreach="range(20)" t-as="item">
+                        <span style="text-decoration: underline;">&amp;nbsp;</span>
+                    </t>
+                </div>
+
+            </div>
+        </xpath>
+        <xpath expr="//t[@t-if='doc.partner_shipping_id == doc.partner_invoice_id
+                             and doc.partner_invoice_id != doc.partner_id
+                             or doc.partner_shipping_id != doc.partner_invoice_id']" position="after">
+            <div style="float:right;">
+                <span>Assembly</span>
+                <t t-if="doc.assembly">
+                    <span>Y</span>
+                </t>
+                <t t-else="">
+                    <span>N</span>
+                </t>
+                <t t-foreach="range(10)" t-as="item">
+                    <span style="width:30px;">&amp;nbsp;</span>
+                </t>
+                <span>Delivery</span>
+                <t t-if="doc.delivery">
+                    <span>Y</span>
+                </t>
+                <t t-else="">
+                    <span>N</span>
+                </t>
+                <t t-foreach="range(10)" t-as="item">
+                    <span style="width:30px;">&amp;nbsp;</span>
+                </t>
+                <span>Pick up</span>
+                <t t-if="doc.pick_up">
+                    <span>Y</span>
+                </t>
+                <t t-else="">
+                    <span>N</span>
+                </t>
+                <t t-foreach="range(10)" t-as="item">
+                    <span style="width:30px;">&amp;nbsp;</span>
+                </t>
+                <span>Install</span>
+                <t t-if="doc.pick_up">
+                    <span>Y</span>
+                </t>
+                <t t-else="">
+                    <span>N</span>
+                </t>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@id='informations']" position="after">
+            <div class="row mt32 mb32" id="informations_two">
+                <div t-if="doc.expected_date" class="col-auto col-3 mw-100 mb-2">
+                    <strong>Delivery Date:</strong>
+                    <p class="m-0" t-field="doc.expected_date"/>
+                </div>
+                <div t-if="doc.designer" class="col-auto col-3 mw-100 mb-2">
+                    <strong>Designer:</strong>
+                    <p class="m-0" t-field="doc.designer"/>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@id='informations']/div[2]" position="attributes">
+            <attribute name="t-if"></attribute>
+
+        </xpath>
+
+        <xpath expr="//th[@name='th_description']" position="attributes">
+            <attribute name="class">text-right</attribute>
+        </xpath>
+
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_code" class="text-left">Code</th>
+        </xpath>
+        <xpath expr="//td[@name='td_name']" position="before">
+            <t t-if="line.product_id.default_code">
+                <td name="td_code">
+                    <span t-field="line.product_id.default_code"/>
+                </td>
+            </t>
+            <t t-else="">
+                <td name="td_code">
+                    <span t-field="line.name"/>
+                </td>
+            </t>
+        </xpath>
+
+
+    </template>
+
+    <template id="zz_external_layout_background_inherit" inherit_id="web.external_layout_background">
+        <xpath expr="//div[@class='float-left company_address']" position="replace">
+            <div class="float-right company_address">
+                <div>
+                    <strong t-field="company.partner_id.name"/>
+                </div>
+                <div>
+                    <strong t-field="company.partner_id.street"/>
+                </div>
+                <div>
+                    <strong t-field="company.partner_id.street2"/>
+                </div>
+                <div>
+                    <strong t-field="company.partner_id.city"/>
+                    <strong t-field="company.partner_id.state_id"/>
+                    <strong t-field="company.partner_id.zip"/>
+                </div>
+                <div>
+                    <strong>Full Licensed &amp; Insured</strong>
+                </div>
+
+            </div>
+
+        </xpath>
+
+    </template>
+
+</odoo>

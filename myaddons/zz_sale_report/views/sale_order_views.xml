@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_view_form" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.event.sale</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='order_details']" position="after">
+                <group>
+                    <field name="designer"/>
+
+                </group>
+
+                <div style="float:right;">
+                    <field name="assembly"/>
+                    <span>Assembly</span>
+                    <t t-foreach="range(10)" t-as="item">
+                        <span style="width:30px;">&amp;nbsp;</span>
+                    </t>
+                    <field name="delivery"/>
+                    <span>Delivery</span>
+                    <t t-foreach="range(10)" t-as="item">
+                        <span style="width:30px;">&amp;nbsp;</span>
+                    </t>
+                    <field name="pick_up"/>
+                    <span>Pick up</span>
+                    <t t-foreach="range(10)" t-as="item">
+                        <span style="width:30px;">&amp;nbsp;</span>
+                    </t>
+                    <field name="install"/>
+                    <span>Install</span>
+                </div>
+
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
