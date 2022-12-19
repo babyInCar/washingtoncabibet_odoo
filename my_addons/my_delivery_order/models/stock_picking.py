@@ -7,5 +7,5 @@ class MyStockPicking(models.Model):
     _description = "rewrite stock picking"
 
     def action_verify(self):
-    """通知仓库可以进行发货了 """
+        """通知仓库可以进行发货了 """
         raise UserError(_("I get your request!"))
