@@ -5,19 +5,12 @@
         <xpath expr="//div[@t-if='doc.client_order_ref']/strong" position="replace">
             <strong>Customer PO#:</strong>
         </xpath>
-        <xpath expr="//p[@id='fiscal_position_remark']" position="after">
-            <div style="float:right;">
+        <xpath expr="//div[@name='signature']/div" position="before">
+            <div class="offset-8">
                 <div>
                     <span>I have read,understand and agreed to all terms and conditions in this
-                        <br/>
                         form.
                     </span>
-                </div>
-                <div>
-                    <span>Signature</span>
-                    <t t-foreach="range(20)" t-as="item">
-                        <span style="text-decoration: underline;">&amp;nbsp;</span>
-                    </t>
                 </div>
 
             </div>
