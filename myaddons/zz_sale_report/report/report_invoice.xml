@@ -5,33 +5,23 @@
         <xpath expr="//div[@name='reference']/strong" position="replace">
             <strong>Customer PO#:</strong>
         </xpath>
-<!--        <xpath expr="//p[@name='incoterm']" position="after">-->
-<!--            <div style="float:right;">-->
-<!--                <div>-->
-<!--                    <span>I have read,understand and agreed to all terms and conditions in this-->
-<!--                        <br/>-->
-<!--                        form.-->
-<!--                    </span>-->
-<!--                </div>-->
-<!--                <div>-->
-<!--                    <span>Signature</span>-->
-<!--                    <t t-foreach="range(20)" t-as="item">-->
-<!--                        <span style="text-decoration: underline;">&amp;nbsp;</span>-->
-<!--                    </t>-->
-<!--                </div>-->
-
-<!--            </div>-->
-<!--        </xpath>-->
-
 
         <xpath expr="//th[@name='th_description']" position="attributes">
             <attribute name="class">text-right</attribute>
         </xpath>
 
         <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_quantity_pro" class="text-left">
+                <span>Quantity</span>
+            </th>
             <th name="th_code" class="text-left">Code</th>
         </xpath>
         <xpath expr="//td[@name='account_invoice_line_name']" position="before">
+            <td class="text-left">
+                <span t-field="line.quantity"/>
+                <span t-field="line.product_uom_id" groups="uom.group_uom"/>
+            </td>
+
             <t t-if="line.product_id.default_code">
                 <td name="td_code">
                     <span t-field="line.product_id.default_code"/>
@@ -50,6 +40,9 @@
             </div>
 
         </xpath>
+
+        <xpath expr="//th[@name='th_quantity']" position="replace"/>
+        <xpath expr="//t[@name='account_invoice_line_accountable']/td[@class='text-right']" position="replace"/>
 
 
     </template>

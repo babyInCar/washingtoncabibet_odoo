@@ -14,3 +14,24 @@ class SaleOrder(models.Model):
     install = fields.Boolean(string=' Install')
 
     designer = fields.Many2one('res.partner', string='Designer')
+
+    payment_state = fields.Selection(selection=[
+        ('not_paid', 'Not Paid'),
+        ('in_payment', 'In Payment'),
+        ('paid', 'Paid'),
+        ('partial', 'Partially Paid'),
+        ('reversed', 'Reversed'),
+        ('invoicing_legacy', 'Invoicing App Legacy')],
+        string="Payment Status", compute='compute_payment_state')
+
+    @api.depends('invoice_ids')
+    def compute_payment_state(self):
+        for line in self:
+            payment_state = False
+            if line.invoice_ids:
+                account = self.env['account.move'].search([('id', 'in', line.invoice_ids.ids)],
+                                                          order='write_date desc', limit=1)
+                if account:
+                    payment_state = account.payment_state
+
+            line.payment_state = payment_state

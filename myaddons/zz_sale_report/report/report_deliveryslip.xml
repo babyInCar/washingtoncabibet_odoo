@@ -4,7 +4,7 @@
 
         <xpath expr="//div[@class='page']" position="before">
             <div style="float:right;">
-                <span>Assembly:</span>
+                <span>Assembly</span>
                 <t t-if="o.assembly">
                     <span>Y</span>
                 </t>
@@ -14,7 +14,7 @@
                 <t t-foreach="range(6)" t-as="item">
                     <span style="width:30px;">&amp;nbsp;</span>
                 </t>
-                <span>Delivery:</span>
+                <span>Delivery</span>
                 <t t-if="o.delivery">
                     <span>Y</span>
                 </t>
@@ -24,7 +24,7 @@
                 <t t-foreach="range(6)" t-as="item">
                     <span style="width:30px;">&amp;nbsp;</span>
                 </t>
-                <span>Pick up:</span>
+                <span>Pick up</span>
                 <t t-if="o.pick_up">
                     <span>Y</span>
                 </t>
@@ -34,7 +34,7 @@
                 <t t-foreach="range(6)" t-as="item">
                     <span style="width:30px;">&amp;nbsp;</span>
                 </t>
-                <span>Install:</span>
+                <span>Install</span>
                 <t t-if="o.pick_up">
                     <span>Y</span>
                 </t>
@@ -48,9 +48,15 @@
                 <div>
                     <span style="font-size:14px">
                         By singing this list,I confirm that I have received all goods in this order as listed
-                        accurately <br/>and I confirm the satisfaction to the quality of products I received
-
+                        accurately and I confirm the satisfaction to the quality of products I received
                     </span>
+                </div>
+                <div>
+                    <span>Signature：</span>
+                    <t t-foreach="range(20)" t-as="item">
+                        <span style="width:30px;">&amp;nbsp;</span>
+                    </t>
+                    <span>Date：</span>
                 </div>
 
             </div>

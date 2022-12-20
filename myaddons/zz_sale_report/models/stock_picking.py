@@ -24,7 +24,7 @@ class StockPicking(models.Model):
         ('partial', 'Partially Paid'),
         ('reversed', 'Reversed'),
         ('invoicing_legacy', 'Invoicing App Legacy')],
-        string="Payment Status", compute='compute_payment_state')
+        string="Payment Status", related='sale_id.payment_state')
 
     total_pieces = fields.Integer(string='Total Pieces', compute="compute_pieces_cabinets")
     total_cabinets = fields.Integer(string='Total Cabinets', compute="compute_pieces_cabinets")
