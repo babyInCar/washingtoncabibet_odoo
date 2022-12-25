@@ -70,8 +70,10 @@ class MyStockPicking(models.Model):
             channel = self.env['mail.channel'].sudo(user).init_odoobot()
 
         # 发送消息
+        model_data_obj = self.pool.get('ir.model.data')
+        ref = model_data_obj.get_object_reference(cr, uid, 'mail', 'mt_comment')
         channel.with_context(mail_create_nosubscribe=True).sudo().message_post(
             subject="Delivery reminder",
             body=message, 
             message_type='comment', 
-            subtype='mail.mt_comment')
+            subtype_id=ref)
