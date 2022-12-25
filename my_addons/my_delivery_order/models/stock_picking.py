@@ -71,9 +71,8 @@ class MyStockPicking(models.Model):
 
         # 发送消息
         model_data_obj = self.pool.get('ir.model.data')
-        ref = model_data_obj.get_object_reference(cr, uid, 'mail', 'mt_comment')
         channel.with_context(mail_create_nosubscribe=True).sudo().message_post(
             subject="Delivery reminder",
             body=message, 
             message_type='comment', 
-            subtype_id=ref)
+            subtype_xmlid='mail.mt_comment')
