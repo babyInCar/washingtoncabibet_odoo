@@ -61,9 +61,9 @@
 
         <xpath expr="//div[@id='informations']" position="after">
             <div class="row mt32 mb32" id="informations_two">
-                <div t-if="doc.expected_date" class="col-auto col-3 mw-100 mb-2">
+                <div t-if="doc.commitment_date" class="col-auto col-3 mw-100 mb-2">
                     <strong>Delivery Date:</strong>
-                    <p class="m-0" t-field="doc.expected_date"/>
+                    <p class="m-0" t-field="doc.commitment_date"/>
                 </div>
                 <div t-if="doc.designer" class="col-auto col-3 mw-100 mb-2">
                     <strong>Designer:</strong>
@@ -72,8 +72,11 @@
             </div>
         </xpath>
 
-        <xpath expr="//div[@id='informations']/div[2]" position="attributes">
-            <attribute name="t-if"></attribute>
+        <xpath expr="//div[@id='informations']/div[3]" position="replace">
+            <div  class="col-auto col-3 mw-100 mb-2">
+                <strong>Quotation Date:</strong>
+                <p class="m-0" t-field="doc.create_date" t-options='{"widget": "date"}'/>
+            </div>
 
         </xpath>
 
@@ -170,7 +173,6 @@
         </xpath>
 
     </template>
-
 
 
 </odoo>

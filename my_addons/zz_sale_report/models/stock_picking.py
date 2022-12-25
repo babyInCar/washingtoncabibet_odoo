@@ -44,14 +44,14 @@ class StockPicking(models.Model):
             else:
                 line.is_sale_show = True
 
-    @api.depends('sale_id','sale_id.invoice_ids')
-    def compute_payment_state(self):
-        for line in self:
-            payment_state = False
-            if line.sale_id:
-                account = self.env['account.move'].search([('id', 'in', line.sale_id.invoice_ids.ids)],
-                                                          order='write_date desc', limit=1)
-                if account:
-                    payment_state = account.payment_state
-
-            line.payment_state = payment_state
+    # @api.depends('sale_id','sale_id.invoice_ids')
+    # def compute_payment_state(self):
+    #     for line in self:
+    #         payment_state = False
+    #         if line.sale_id:
+    #             account = self.env['account.move'].search([('id', 'in', line.sale_id.invoice_ids.ids)],
+    #                                                       order='write_date desc', limit=1)
+    #             if account:
+    #                 payment_state = account.payment_state
+    #
+    #         line.payment_state = payment_state
