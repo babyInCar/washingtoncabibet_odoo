@@ -14,18 +14,18 @@ class MyStockPicking(models.Model):
         ('partial', 'Partially Paid'),
         ('reversed', 'Reversed'),
         ('invoicing_legacy', 'Invoicing App Legacy')],
-        string="Payment Status")
+        string="Payment Status", compute='_compute_payment_state')
 
-    # @api.depends('sale_id','sale_id.invoice_ids')
-    # def _compute_payment_state(self):
-    #     for line in self:
-    #         payment_state = False
-    #         if line.sale_id:
-    #             account = self.env['account.move'].search([('id', 'in', line.sale_id.invoice_ids.ids)],
-    #                                                       order='write_date desc', limit=1)
-    #             if account:
-    #                 payment_state = account.payment_state
-    #         line.payment_state = payment_state    
+    @api.depends('sale_id','sale_id.invoice_ids')
+    def _compute_payment_state(self):
+        for line in self:
+            payment_state = False
+            if line.sale_id:
+                account = self.env['account.move'].search([('id', 'in', line.sale_id.invoice_ids.ids)],
+                                                          order='write_date desc', limit=1)
+                if account:
+                    payment_state = account.payment_state
+            line.payment_state = payment_state    
 
     def action_verify(self):
         """通知仓库可以进行发货了 """
@@ -37,12 +37,6 @@ class MyStockPicking(models.Model):
         self._send_sys_message(group_obj.users.user_id, "请及时准备发货！")
         # except Exception as e:
         #     print(f"消息发送失败，失败原因为：{e}")
-        # self.message_notify(
-        #     body="亲，准备发货了",
-        #     partner_ids=[self.user_id.partner_id.id],
-        #     subtype_xmlid='mail.mt_comment',
-        #     email_layout_xmlid='mail.mail_notification_light',
-        # )
 
     def button_validate(self):
         """重写验证方法 gaos add this 2022.12.20 """
@@ -59,19 +53,24 @@ class MyStockPicking(models.Model):
         """
         # 获取OdooBot的partner_id
         odoobot_id = self.env['ir.model.data'].xmlid_to_res_id("base.partner_root")
-
         # 获取OdooBot和用户的聊天频道
-        channel = self.env['mail.channel'].with_user(user.uid).search(
+        channel = self.env['mail.channel'].with_user(user.id).search(
             [('channel_type', '=', 'chat'), ('channel_partner_ids', 'in', [odoobot_id])], limit=1)
-
         # 不存在则初始化聊天频道
         if not channel:
             user.odoobot_state = 'not_initialized'
-            channel = self.env['mail.channel'].with_user(user.uid).init_odoobot()
+            channel = self.env['mail.channel'].with_user(user.id).init_odoobot()
 
         # 发送消息
-        channel.with_context(mail_create_nosubscribe=True).with_user(user.uid).message_post(
+        channel.with_context(mail_create_nosubscribe=True).with_user(user.id).message_post(
             subject="Delivery reminder",
             body=message, 
             message_type='comment', 
             subtype_xmlid='mail.mt_comment')
+        
+        # self.message_notify(
+        #     body="亲，准备发货了",
+        #     partner_ids=[self.user_id.partner_id.id],
+        #     subtype_xmlid='mail.mt_comment',
+        #     email_layout_xmlid='mail.mail_notification_light',
+        # )
