@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import fields, models
+from odoo import fields, models, api
 from odoo.exceptions import UserError
 
 class MyStockPicking(models.Model):
@@ -16,6 +16,7 @@ class MyStockPicking(models.Model):
         ('invoicing_legacy', 'Invoicing App Legacy')],
         string="Payment Status", related='sale_id.payment_state')
 
+
     # @api.depends('sale_id','sale_id.invoice_ids')
     # def _compute_payment_state(self):
     #     for line in self:
@@ -25,12 +26,11 @@ class MyStockPicking(models.Model):
     #                                                       order='write_date desc', limit=1)
     #             if account:
     #                 payment_state = account.payment_state
-
     #         line.payment_state = payment_state    
 
     def action_verify(self):
         """通知仓库可以进行发货了 """
-        group_obj = self.env['res.groups'].search([("Group Name","=","Inventory / User")], limit=1)
+        group_obj = self.env['res.groups'].search([("Group Name", "=", "Inventory / User")], limit=1)
         print(group_obj.Users)
         self._send_sys_message(group_obj.Users.user_id, "请及时准备发货！")
         # self.message_notify(
