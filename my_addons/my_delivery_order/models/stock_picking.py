@@ -61,17 +61,16 @@ class MyStockPicking(models.Model):
         odoobot_id = self.env['ir.model.data'].xmlid_to_res_id("base.partner_root")
 
         # 获取OdooBot和用户的聊天频道
-        channel = self.env['mail.channel'].sudo(user).search(
+        channel = self.env['mail.channel'].with_user(user.uid).search(
             [('channel_type', '=', 'chat'), ('channel_partner_ids', 'in', [odoobot_id])], limit=1)
 
         # 不存在则初始化聊天频道
         if not channel:
             user.odoobot_state = 'not_initialized'
-            channel = self.env['mail.channel'].sudo(user).init_odoobot()
+            channel = self.env['mail.channel'].with_user(user.uid).init_odoobot()
 
         # 发送消息
-        model_data_obj = self.pool.get('ir.model.data')
-        channel.with_context(mail_create_nosubscribe=True).with_user(uid).message_post(
+        channel.with_context(mail_create_nosubscribe=True).with_user(user.uid).message_post(
             subject="Delivery reminder",
             body=message, 
             message_type='comment', 
