@@ -14,18 +14,18 @@ class MyStockPicking(models.Model):
         ('partial', 'Partially Paid'),
         ('reversed', 'Reversed'),
         ('invoicing_legacy', 'Invoicing App Legacy')],
-        string="Payment Status", compute='_compute_payment_state')
+        string="Payment Status", compute='sale_id.payment_state')
 
-    @api.depends('sale_id','sale_id.invoice_ids')
-    def _compute_payment_state(self):
-        for line in self:
-            payment_state = False
-            if line.sale_id:
-                account = self.env['account.move'].search([('id', 'in', line.sale_id.invoice_ids.ids)],
-                                                          order='write_date desc', limit=1)
-                if account:
-                    payment_state = account.payment_state
-            line.payment_state = payment_state    
+    # @api.depends('sale_id','sale_id.invoice_ids')
+    # def _compute_payment_state(self):
+    #     for line in self:
+    #         payment_state = False
+    #         if line.sale_id:
+    #             account = self.env['account.move'].search([('id', 'in', line.sale_id.invoice_ids.ids)],
+    #                                                       order='write_date desc', limit=1)
+    #             if account:
+    #                 payment_state = account.payment_state
+    #         line.payment_state = payment_state    
 
     def action_verify(self):
         """通知仓库可以进行发货了 """
@@ -42,7 +42,7 @@ class MyStockPicking(models.Model):
         """重写验证方法 gaos add this 2022.12.20 """
         for line in self:
             if line.payment_state != "paid":
-                raise UserError("商品未支付，不能发货！")
+                raise UserError("The products is not paid, can not be deliveried！")
         return super(MyStockPicking, self).button_validate()
 
     def _send_sys_message(self, user, message):
