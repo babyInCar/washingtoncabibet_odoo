@@ -39,7 +39,8 @@ class MyStockPicking(models.Model):
         partner_ids = [user.partner_id.id for user in group_obj.users.user_ids]
         print(partner_ids)
         self.message_notify(
-            body=f"Hello，please prepare to delivery goods of {self.name}",
+            body="<p>You have received a notification</p>",      # f"Hello，please prepare to delivery goods of {self.name}",
+            subject=_('Message are pending moderation'),
             partner_ids=partner_ids,
             subtype_xmlid='mail.mt_comment',
             email_layout_xmlid='mail.mail_notification_light',
