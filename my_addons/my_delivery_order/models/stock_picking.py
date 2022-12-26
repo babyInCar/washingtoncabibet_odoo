@@ -41,7 +41,7 @@ class MyStockPicking(models.Model):
             self.message_notify(
                 body="<p>You have received a notification</p>",      # f"Hello，please prepare to delivery goods of {self.name}",
                 subject=_('Message are pending moderation'),
-                partner_ids=[self.user_id.partner_id.id],
+                partner_ids=partner_ids,
                 subtype_xmlid='mail.mt_comment',
                 email_layout_xmlid='mail.mail_notification_light',
             )
