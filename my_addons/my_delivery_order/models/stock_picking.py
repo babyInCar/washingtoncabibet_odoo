@@ -33,8 +33,8 @@ class MyStockPicking(models.Model):
         category_obj = self.env['ir.module.category'].search([('name','=','Inventory')],limit=1)
         category_id = category_obj.id
         group_obj = self.env['res.groups'].search([("category_id", "=", category_id),('name','=','User')], limit=1)
-        print(group_obj.users)
-        self._send_sys_message(group_obj.users.user_id, "请及时准备发货！")
+        print(group_obj.users.user_ids)
+        self._send_sys_message(group_obj.users.user_ids, "请及时准备发货！")
         # except Exception as e:
         #     print(f"消息发送失败，失败原因为：{e}")
 
