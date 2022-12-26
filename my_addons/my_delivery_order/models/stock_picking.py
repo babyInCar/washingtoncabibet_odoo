@@ -14,7 +14,7 @@ class MyStockPicking(models.Model):
         ('partial', 'Partially Paid'),
         ('reversed', 'Reversed'),
         ('invoicing_legacy', 'Invoicing App Legacy')],
-        string="Payment Status", compute='sale_id.payment_state')
+        string="Payment Status", related='sale_id.payment_state')
 
     # @api.depends('sale_id','sale_id.invoice_ids')
     # def _compute_payment_state(self):
