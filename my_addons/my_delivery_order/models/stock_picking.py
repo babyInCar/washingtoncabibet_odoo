@@ -35,7 +35,13 @@ class MyStockPicking(models.Model):
         group_obj = self.env['res.groups'].search([("category_id", "=", category_id),('name','=','User')], limit=1)
         print(group_obj.users.user_ids)
         for inventory_user_id in group_obj.users.user_ids:
-            self._send_sys_message(inventory_user_id, "请及时准备发货！")
+            # self._send_sys_message(inventory_user_id, "请及时准备发货！")
+            self.env['mail.thread'].message_notify(
+            body="亲，准备发货了",
+            partner_ids=[inventory_user_id.partner_id.id],
+            subtype_xmlid='mail.mt_comment',
+            email_layout_xmlid='mail.mail_notification_light',
+            )
         # except Exception as e:
         #     print(f"消息发送失败，失败原因为：{e}")
 
@@ -66,12 +72,7 @@ class MyStockPicking(models.Model):
         channel.with_context(mail_create_nosubscribe=True).with_user(user.id).message_post(
             subject="Delivery reminder",
             body=message, 
-            message_type='comment', 
+            message_type='notification', 
             subtype_xmlid='mail.mt_comment')
         
-        # self.message_notify(
-        #     body="亲，准备发货了",
-        #     partner_ids=[self.user_id.partner_id.id],
-        #     subtype_xmlid='mail.mt_comment',
-        #     email_layout_xmlid='mail.mail_notification_light',
-        # )
+        
