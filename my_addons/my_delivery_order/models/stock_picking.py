@@ -68,10 +68,10 @@ class MyStockPicking(models.Model):
         # 不存在则初始化聊天频道
         if not channel:
             user.odoobot_state = 'not_initialized'
-            channel = self.env['mail.channel'].with_user(user.id).init_odoobot()
+            channel = self.env['mail.channel'].init_odoobot()
 
         # 发送消息
-        channel.with_context(mail_create_nosubscribe=True).with_user(user.id).message_post(
+        channel.with_context(mail_create_nosubscribe=True).message_post(
             subject="Delivery reminder",
             body=message, 
             message_type='notification', 
