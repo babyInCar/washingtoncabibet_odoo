@@ -36,36 +36,6 @@
 -->
 
     <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="my_delivery_order.action_server">
-      <field name="name">my_delivery_order server</field>
-      <field name="model_id" ref="model_my_delivery_order_my_delivery_order"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": model._name,
-        }
-      </field>
-    </record>
--->
 
-    <!-- Top menu item -->
-<!--
-    <menuitem name="my_delivery_order" id="my_delivery_order.menu_root"/>
--->
-    <!-- menu categories -->
-<!--
-    <menuitem name="Menu 1" id="my_delivery_order.menu_1" parent="my_delivery_order.menu_root"/>
-    <menuitem name="Menu 2" id="my_delivery_order.menu_2" parent="my_delivery_order.menu_root"/>
--->
-    <!-- actions -->
-<!--
-    <menuitem name="List" id="my_delivery_order.menu_1_list" parent="my_delivery_order.menu_1"
-              action="my_delivery_order.action_window"/>
-    <menuitem name="Server to list" id="my_delivery_order" parent="my_delivery_order.menu_2"
-              action="my_delivery_order.action_server"/>
--->
   </data>
 </odoo>
