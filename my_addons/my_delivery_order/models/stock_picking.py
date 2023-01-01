@@ -51,8 +51,8 @@ class MyStockPicking(models.Model):
     def button_validate(self):
         """重写验证方法 gaos add this 2022.12.20 """
         for line in self:
-            if line.payment_state != "paid":
-                raise UserError("The products is not paid, can not be deliveried！")
+            if line.payment_state not in ["paid","partial"]:
+                raise UserError("The source document is not paid. This order cannot be delivered. ")
         return super(MyStockPicking, self).button_validate()
 
     def _send_sys_message(self, user, message):
