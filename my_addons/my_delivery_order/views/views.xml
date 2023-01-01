@@ -12,30 +12,6 @@
             </xpath>
             </field>
         </record>
-<!--
-    <record model="ir.ui.view" id="my_delivery_order.list">
-      <field name="name">my_delivery_order list</field>
-      <field name="model">my_delivery_order.my_delivery_order</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </tree>
-      </field>
-    </record>
--->
-
-    <!-- actions opening views on models -->
-<!--
-    <record model="ir.actions.act_window" id="my_delivery_order.action_window">
-      <field name="name">my_delivery_order window</field>
-      <field name="res_model">my_delivery_order.my_delivery_order</field>
-      <field name="view_mode">tree,form</field>
-    </record>
--->
-
-    <!-- server action to the one above -->
 
   </data>
 </odoo>
